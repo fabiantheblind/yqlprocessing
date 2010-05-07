@@ -9,12 +9,10 @@
  */
 
 package main;
-
-
-
 import geo.PlacemarkerManager;
 import java.io.UnsupportedEncodingException;
 import processing.core.PApplet;
+import processing.core.PImage;
 import processing.xml.XMLElement;
 import util.HTMLEncoding;
 import util.XmlWriter;
@@ -45,11 +43,12 @@ public class Main extends PApplet {
 	public HTMLEncoding coder = new HTMLEncoding();
 	public XmlWriter xmlWriter;
 	public PApplet  p;
+	PImage worldMap;
 	
 	public void setup() {
-		
-		size(360,180);
-		background(0);
+		worldMap = loadImage("./data/worldmap-equirectangular-s.jpg");
+		size(worldMap.width,worldMap.height);
+
 		pmManager = new PlacemarkerManager(this);
 		
 		try {
@@ -64,7 +63,6 @@ public class Main extends PApplet {
 		println("got Response from RSS");
 		XMLElement[] descrXMLElements = xmlResponse.getChildren("results/item/description");
 		println("XMLElements >discription> collected from RSS");
-//		println(descrXMLElements);
 		String	 myPlaceQueryUncoded;
 		String myPlaceKey;
 		
@@ -89,26 +87,32 @@ public class Main extends PApplet {
 			println("Got Response from placemaker");
 			XMLElement[] finalPlaceXMLElements = xmlNextResponse.getChildren("results/matches/match/place");
 			println("XMLElements <place> collected");
-//			println(finalPlaceXMLElements);
-//			exit();
+
 					  for(int j =0;j<finalPlaceXMLElements.length;j++){
-						  pmManager.init(finalPlaceXMLElements);
-						  
-//						  println(finalPlaceXMLElements);
-//						  println(placeMarkersList);
-//						  PlaceMarker pm = (PlaceMarker) placeMarkersList.get(j);
-//						  pm.display();					
+						  pmManager.init(finalPlaceXMLElements);	
 					  	}					  
 //						xmlWriter.writeXml(xmlNextResponse);
-//						println (xmlNextResponse);
 						println("Got all Placemarker in Arraylist");
 		 }
-//		translate(width/2,height/2);
 	}
 
 	public void draw () {
-		println("Call PlacemarkerManager Method drawPlaces()");
+		 image(worldMap, 0, 0, worldMap.width, worldMap.height);
+//			background(0);
+//		println("Call PlacemarkerManager Method drawPlaces()");
 		pmManager.drawPlaces();
+	}
+	
+	public void keyReleased(){
+		
+		if (key == 's' || key == 'S') {
+			saveFrame("./data/MyImg.jpg");
+			
+		}	
+		if (key == 'e' || key == 'E') {
+		exit();			
+		}	
+		
 	}
 	
 	public static void main(String _args[]) {

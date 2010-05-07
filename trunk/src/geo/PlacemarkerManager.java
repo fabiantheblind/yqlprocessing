@@ -7,10 +7,10 @@ import java.util.ArrayList;
 import processing.core.PApplet;
 import processing.xml.XMLElement;
 public class PlacemarkerManager {
+	PApplet p;
 
-
-	public PlacemarkerManager(PApplet p){
-		
+	public PlacemarkerManager(PApplet CP){
+		p=CP;
 		placeList = new ArrayList<PlaceMarker>();
 	}
 	public ArrayList<PlaceMarker> placeList;// = new ArrayList<PlaceMarker>();
@@ -26,19 +26,18 @@ public class PlacemarkerManager {
 		    float lng = new Float(myElement[i].getChild("centroid").getChild("longitude").getContent());
 		    
 //		   System.out.println("RawData: "+name +" "+"lat:"+lat+" lon:" + lng);
-		    PlaceMarker placeMarker = new PlaceMarker(name, lat, lng);
+		    PlaceMarker placeMarker = new PlaceMarker(p,name, lat, lng);
 //		    System.out.println("PlacemakerData: "+placeMarker);
 
 		    placeList.add(placeMarker);
-
 //		    println(i + ": " + placeMarker);  
 		  }
 		}
 	
 	public void drawPlaces(){
-		System.out.println("Begin Iteration thru Arraylist<PlaceMarker>");
+//		System.out.println("Begin Iteration thru Arraylist<PlaceMarker>");
 		for(int i = 0; i<placeList.size();i++){
-			System.out.println("Call Method display() from Class PlaceMarker");
+//			System.out.println("Call Method display() from Class PlaceMarker");
 			(placeList.get(i)).display();
 		}
 		
