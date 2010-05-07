@@ -9,10 +9,13 @@ import net.nexttext.Book;
 import processing.core.PApplet;
 import processing.core.PFont;
 import processing.xml.XMLElement;
+import seltar.motion.Motion;
 public class PlacemarkerManager {
 	PApplet p;
 	public Book book;
 //	PFont font;
+	  public Motion myMotion;
+
 
 	public PlacemarkerManager(PApplet CP){
 		p=CP;
@@ -43,9 +46,10 @@ public class PlacemarkerManager {
 		    String name = myElement[i].getChild(2).getContent();
 		    float lat = new Float(myElement[i].getChild("centroid").getChild("latitude").getContent());
 		    float lng = new Float(myElement[i].getChild("centroid").getChild("longitude").getContent());
-		    
+		    myMotion = new Motion(p.width/2,p.height/2);
+		    myMotion.setDamping(0.99f);
 //		   System.out.println("RawData: "+name +" "+"lat:"+lat+" lon:" + lng);
-		    PlaceMarker placeMarker = new PlaceMarker(p,name, lat, lng);
+		    PlaceMarker placeMarker = new PlaceMarker(p,name, lat, lng, myMotion);
 //		    System.out.println("PlacemakerData: "+placeMarker);
 
 		    placeList.add(placeMarker);
@@ -53,14 +57,14 @@ public class PlacemarkerManager {
 		  }
 		}
 	
-	public void drawPlaces(PFont font){
+	public void drawPlaces(){
 		
 //		System.out.println("Begin Iteration thru Arraylist<PlaceMarker>");
 		for(int i = 0; i<placeList.size();i++){
 //			System.out.println("Call Method display() from Class PlaceMarker");
 
 
-			(placeList.get(i)).display(font);
+			(placeList.get(i)).display();
 		}
 
 		
