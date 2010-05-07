@@ -1,17 +1,23 @@
 package geo;
 
+import java.util.ArrayList;
+
+
+
 import processing.core.PApplet;
 import processing.xml.XMLElement;
 public class PlacemarkerManager {
-	public PApplet p;
-	
-	public PlacemarkerManager(){
+
+
+	public PlacemarkerManager(PApplet p){
 		
-		
+		placeList = new ArrayList<PlaceMarker>();
 	}
+	public ArrayList<PlaceMarker> placeList;// = new ArrayList<PlaceMarker>();
 	
-	@SuppressWarnings("static-access")
-	public 	void createPlaces(XMLElement[] myElement) {
+	
+
+	public 	void init(XMLElement[] myElement) {
 		
 		  
 		  for (int i = 0; i < myElement.length; i++) {
@@ -19,13 +25,23 @@ public class PlacemarkerManager {
 		    float lat = new Float(myElement[i].getChild("centroid").getChild("latitude").getContent());
 		    float lng = new Float(myElement[i].getChild("centroid").getChild("longitude").getContent());
 		    
-		    p.println("RawData: "+name +" "+"lat:"+lat+" lon:" + lng);
+//		   System.out.println("RawData: "+name +" "+"lat:"+lat+" lon:" + lng);
 		    PlaceMarker placeMarker = new PlaceMarker(name, lat, lng);
-		    p.println("PlacemakerData: "+placeMarker);
+//		    System.out.println("PlacemakerData: "+placeMarker);
 
-//		    placeMarkersList.add(placeMarker);
+		    placeList.add(placeMarker);
 
 //		    println(i + ": " + placeMarker);  
 		  }
 		}
+	
+	public void drawPlaces(){
+		System.out.println("Begin Iteration thru Arraylist<PlaceMarker>");
+		for(int i = 0; i<placeList.size();i++){
+			System.out.println("Call Method display() from Class PlaceMarker");
+			(placeList.get(i)).display();
+		}
+		
+		
+	}
 }
