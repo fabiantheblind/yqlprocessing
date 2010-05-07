@@ -12,6 +12,7 @@ package main;
 import geo.PlacemarkerManager;
 import java.io.UnsupportedEncodingException;
 import processing.core.PApplet;
+import processing.core.PFont;
 import processing.core.PImage;
 import processing.xml.XMLElement;
 import util.HTMLEncoding;
@@ -44,10 +45,14 @@ public class Main extends PApplet {
 	public XmlWriter xmlWriter;
 	public PApplet  p;
 	PImage worldMap;
+	public PFont font;
 	
 	public void setup() {
+
+		font = createFont("./data/GenBasR.ttf", 10f);
+
 		worldMap = loadImage("./data/worldmap-equirectangular-s.jpg");
-		size(worldMap.width,worldMap.height);
+		size(1200,600);
 
 		pmManager = new PlacemarkerManager(this);
 		
@@ -97,10 +102,15 @@ public class Main extends PApplet {
 	}
 
 	public void draw () {
-		 image(worldMap, 0, 0, worldMap.width, worldMap.height);
-//			background(0);
+	
+		smooth();
+//		 image(worldMap, 0, 0, worldMap.width, worldMap.height);
+			background(0);
 //		println("Call PlacemarkerManager Method drawPlaces()");
-		pmManager.drawPlaces();
+		pmManager.drawPlaces(font);
+//		fill(0);
+//		rect(0,0,width,height);
+	
 	}
 	
 	public void keyReleased(){
