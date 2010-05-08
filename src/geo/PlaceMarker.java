@@ -3,11 +3,11 @@ package geo;
 
 
 
-import net.nexttext.Book;
+
 import processing.core.PApplet;
-import processing.core.PFont;
 import seltar.motion.*;
-import util.Style;
+import visual.Particle;
+import visual.Style;
 
 public class PlaceMarker {
 	 PApplet p;
@@ -15,6 +15,7 @@ public class PlaceMarker {
 	  public float lat;
 	  public float lng;
 	  public Motion motion;
+	  public Particle particle;
 
 	 
 	  
@@ -27,9 +28,31 @@ public class PlaceMarker {
 
 	  }
 
+/**
+	 * @param p2
+	 * @param name2
+	 * @param lat2
+	 * @param lng2
+	 * @param myMotion
+	 * @param particle
+	 */
+	public PlaceMarker(PApplet CP, String name, float lat, float lng,
+			Motion cMotion, Particle cParticle) {
+		// TODO Auto-generated constructor stub
+	    this.name = name;
+	    this.lat = lat;
+	    this.lng = lng;
+	    motion = cMotion;
+	    p = CP;
+	    particle = cParticle;
+	}
+
 @SuppressWarnings("static-access")
 public void display() {
-	p.smooth();
+		p.smooth();
+
+		
+		 
 
 	    // Equirectangular projection
 //	p.println("in method display call lat lon");
@@ -41,16 +64,21 @@ public void display() {
 
 	    p.noStroke();
 	    p.fill(230, 50);
-	    p.ellipse(motion.getX()+p.random(-1,1), motion.getY()+p.random(-1,1), 10, 10);
+	    p.ellipse(motion.getX()+Style.addToPosX, motion.getY()+Style.addToPosY, 10, 10);
 	    p.fill(128, 200);
-	    p.ellipse(motion.getX()+p.random(-1,1), motion.getY()+p.random(-1,1), 5, 5);
-	    
-	    float textX =motion.getX()+p.random(-1,1) ;
-	    float textY =motion.getY()+p.random(-1,1) ;   
+	    p.ellipse(motion.getX()+Style.addToPosX, motion.getY()+Style.addToPosY, 5, 5);
+	    p.stroke(255,200);
+	    p.line(motion.getX()+Style.addToPosX,  motion.getY()+Style.addToPosY, particle.xpos, particle.ypos);
+	    p.noStroke();
+	    float textX = particle.xpos + Style.addToPosX;
+	    float textY = particle.ypos +Style.addToPosY ;   
 	    p.fill(5,200);
 	    p.text(name,textX+2,textY+3);
 	    p.fill(255,240);    
 	    p.text(name,textX+2,textY+2);
+	    particle.render();
+	    particle.move();
+	    
 	    //	    try {
 //	    	p.smooth();
 //			book.addText(name, p.floor(x), p.floor(y));
