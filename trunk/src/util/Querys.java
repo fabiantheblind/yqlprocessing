@@ -24,11 +24,11 @@ public class Querys {
 		
 		try {
 			myQuery = yqlApiUrl + "?q=" + coder.encode(yqlStatement) + "&amp;format=xml";
-			p.println("ENcoding Query RSS");
+//			p.println("ENcoding Query RSS");
 			} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			p.println("Sorry an error ocurred during encoding the string");
+//			p.println("Sorry an error ocurred during encoding the string");
 			}
 		
 		return xmlResponse = new XMLElement(p, myQuery);
